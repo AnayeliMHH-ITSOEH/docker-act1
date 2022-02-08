@@ -1,0 +1,565 @@
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker run -d --name nginx1 nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+5eb5b503b376: Pull complete
+1ae07ab881bd: Pull complete
+78091884b7be: Pull complete
+091c283c6a66: Pull complete
+55de5851019b: Pull complete
+b559bad762be: Pull complete
+Digest: sha256:2834dc507516af02784808c5f48b7cbe38b8ed5d0f4837f16e78d00deb7e7767
+Status: Downloaded newer image for nginx:latest
+4001753cc81517756bd4913decf910e3efb0e21864dd5694a124cb01bffc07d1
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker ps
+CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS         PORTS                NAMES
+4001753cc815   nginx                    "/docker-entrypoint.…"   20 seconds ago   Up 4 seconds   80/tcp               nginx1
+189dc15b349a   wordpress:4.7.2-apache   "docker-entrypoint.s…"   6 hours ago      Up 6 hours     0.0.0.0:80->80/tcp   wordpress01
+f332a43c2982   mariadb:10.0.29          "docker-entrypoint.s…"   6 hours ago      Up 6 hours     3306/tcp             mariadb01
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker logs nginx1
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2022/02/08 20:07:10 [notice] 1#1: using the "epoll" event method
+2022/02/08 20:07:10 [notice] 1#1: nginx/1.21.6
+2022/02/08 20:07:10 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6)
+2022/02/08 20:07:10 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/02/08 20:07:10 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/02/08 20:07:10 [notice] 1#1: start worker processes
+2022/02/08 20:07:10 [notice] 1#1: start worker process 32
+2022/02/08 20:07:10 [notice] 1#1: start worker process 33
+2022/02/08 20:07:10 [notice] 1#1: start worker process 34
+2022/02/08 20:07:10 [notice] 1#1: start worker process 35
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker exec -it nginx1 bash
+root@4001753cc815:/# apt-get update
+Get:1 http://deb.debian.org/debian bullseye InRelease [116 kB]
+Get:2 http://security.debian.org/debian-security bullseye-security InRelease [44.1 kB]
+Get:3 http://deb.debian.org/debian bullseye-updates InRelease [39.4 kB]
+Get:4 http://security.debian.org/debian-security bullseye-security/main amd64 Packages [116 kB]
+Get:5 http://deb.debian.org/debian bullseye/main amd64 Packages [8183 kB]
+Get:6 http://deb.debian.org/debian bullseye-updates/main amd64 Packages [2596 B]
+Fetched 8501 kB in 7s (1263 kB/s)
+Reading package lists... Done
+root@4001753cc815:/# apt-get install curl
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+curl is already the newest version (7.74.0-1.3+deb11u1).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+root@4001753cc815:/# curl localhost
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@4001753cc815:/# exit
+exit
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker logs nginx1
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2022/02/08 20:07:10 [notice] 1#1: using the "epoll" event method
+2022/02/08 20:07:10 [notice] 1#1: nginx/1.21.6
+2022/02/08 20:07:10 [notice] 1#1: built by gcc 10.2.1 20210110 (Debian 10.2.1-6)
+2022/02/08 20:07:10 [notice] 1#1: OS: Linux 5.10.16.3-microsoft-standard-WSL2
+2022/02/08 20:07:10 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2022/02/08 20:07:10 [notice] 1#1: start worker processes
+2022/02/08 20:07:10 [notice] 1#1: start worker process 32
+2022/02/08 20:07:10 [notice] 1#1: start worker process 33
+2022/02/08 20:07:10 [notice] 1#1: start worker process 34
+2022/02/08 20:07:10 [notice] 1#1: start worker process 35
+127.0.0.1 - - [08/Feb/2022:20:08:33 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker exec -it nginx1 bash
+root@4001753cc815:/# exit
+exit
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker top nginx1
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                7796                7775                0                   20:07               ?                   00:00:00            nginx: master process nginx -g daemon off;
+uuidd               7852                7796                0                   20:07               ?                   00:00:00            nginx: worker process
+uuidd               7853                7796                0                   20:07               ?                   00:00:00            nginx: worker process
+uuidd               7854                7796                0                   20:07               ?                   00:00:00            nginx: worker process
+uuidd               7855                7796                0                   20:07               ?                   00:00:00            nginx: worker process
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker stats nginx1
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.01%     21.53MiB / 6.097GiB   0.34%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.01%     21.53MiB / 6.097GiB   0.34%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     21.53MiB / 6.097GiB   0.34%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     21.53MiB / 6.097GiB   0.34%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     21.53MiB / 6.097GiB   0.34%     8.83MB / 142kB   0B / 0B     5
+^Canayelimonserrat@DESKTOP-KB6OENT:~$ docker exec -it nginx1 bash
+root@4001753cc815:/# dd if=/dev/zero of=f1.dat bs=1024 count=100000000
+^C2324456+0 records in
+2324456+0 records out
+2380242944 bytes (2.4 GB, 2.2 GiB) copied, 12.2041 s, 195 MB/s
+
+root@4001753cc815:/# docker stats nginx1
+bash: docker: command not found
+root@4001753cc815:/# exit
+exit
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker stats nginx1
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.03%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.03%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O   PIDS
+4001753cc815   nginx1    0.00%     89.27MiB / 6.097GiB   1.43%     8.83MB / 142kB   0B / 0B     5
+^Canayelimonserrat@DESKTOP-KB6OENT:~$ docker kill nginx1
+nginx1
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker pull mongo
+Using default tag: latest
+latest: Pulling from library/mongo
+08c01a0ec47e: Pull complete
+ceb608a7cda7: Pull complete
+a160d3e3934a: Pull complete
+544b72923120: Pull complete
+812461eda79e: Pull complete
+3e1ac5db1dae: Pull complete
+801c92a93fab: Pull complete
+34e6068e2f4c: Pull complete
+2513dc6d2ec7: Pull complete
+d1ac55ebeb6f: Pull complete
+Digest: sha256:9ae745b709512a09a8c105959f75bde3d8a25c3215842a8251c073e14cd2a04d
+Status: Downloaded newer image for mongo:latest
+docker.io/library/mongo:latest
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker images
+REPOSITORY   TAG            IMAGE ID       CREATED       SIZE
+mongo        latest         5285cb69ea55   6 days ago    698MB
+nginx        latest         c316d5a335a5   13 days ago   142MB
+wordpress    4.7.2-apache   6eaad793d5c8   4 years ago   400MB
+mariadb      10.0.29        f674162608fe   4 years ago   337MB
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker image inspect mongo
+[
+    {
+        "Id": "sha256:5285cb69ea55647dace8e96739d99a1bffdc38e4dfa721a4ba9d39dabfa38df8",
+        "RepoTags": [
+            "mongo:latest"
+        ],
+        "RepoDigests": [
+            "mongo@sha256:9ae745b709512a09a8c105959f75bde3d8a25c3215842a8251c073e14cd2a04d"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2022-02-02T03:55:36.425204655Z",
+        "Container": "324622795d63edda4bbf642aa326e283c9d65786861b6f45e966401e27afe7b0",
+        "ContainerConfig": {
+            "Hostname": "324622795d63",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "27017/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.12",
+                "JSYAML_VERSION=3.13.1",
+                "MONGO_PACKAGE=mongodb-org",
+                "MONGO_REPO=repo.mongodb.org",
+                "MONGO_MAJOR=5.0",
+                "MONGO_VERSION=5.0.6"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"mongod\"]"
+            ],
+            "Image": "sha256:9f0c8f2b7fcbef199bd43531dae3cc5d03426db276d15059bdc870ba8e4c393f",
+            "Volumes": {
+                "/data/configdb": {},
+                "/data/db": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "DockerVersion": "20.10.7",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "27017/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.12",
+                "JSYAML_VERSION=3.13.1",
+                "MONGO_PACKAGE=mongodb-org",
+                "MONGO_REPO=repo.mongodb.org",
+                "MONGO_MAJOR=5.0",
+                "MONGO_VERSION=5.0.6"
+            ],
+            "Cmd": [
+                "mongod"
+            ],
+            "Image": "sha256:9f0c8f2b7fcbef199bd43531dae3cc5d03426db276d15059bdc870ba8e4c393f",
+            "Volumes": {
+                "/data/configdb": {},
+                "/data/db": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 698164401,
+        "VirtualSize": 698164401,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/0bdc0dd976b90ce14a2666d274935f3f41145602e449dcd555f90e7b32cdd542/diff:/var/lib/docker/overlay2/9ddd07758b88c79ffe38035791f4b14459292bc18999ebce3a9d656aa56fc17e/diff:/var/lib/docker/overlay2/b69fc82055f9f31ae8a14804b067767af1f72fb04250cd5e8b461977c2ec449a/diff:/var/lib/docker/overlay2/0d402f1ece21df377cccd1b5d994830605f599d76a61e6a207a80339067290ec/diff:/var/lib/docker/overlay2/1dd57c55b029e3773b59c8406f216994b65614721d9ae0d5f2fd050a5ad37e59/diff:/var/lib/docker/overlay2/1f34d05d7f7242a5a47fe6f150ad93bfafcdd430c9d5c7b359a70394c72650ed/diff:/var/lib/docker/overlay2/c960c4847c2cf207dff33140eb07fb03f62ed99f07dec4738612ed0b845402e7/diff:/var/lib/docker/overlay2/30f106c9ac3b1e0cce2de95125758bf0c03bf6c53b1c21caee8f7a03b42a468e/diff:/var/lib/docker/overlay2/ecd91cbf0bce623c377fb3e896fe1d9fe342e698dc17de3549ca4e0697968cc8/diff",
+                "MergedDir": "/var/lib/docker/overlay2/af6bc7df34e7ff431406800ebb0d0724cb134d0ec944ece961b26fff66314e2a/merged",
+                "UpperDir": "/var/lib/docker/overlay2/af6bc7df34e7ff431406800ebb0d0724cb134d0ec944ece961b26fff66314e2a/diff",
+                "WorkDir": "/var/lib/docker/overlay2/af6bc7df34e7ff431406800ebb0d0724cb134d0ec944ece961b26fff66314e2a/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:36ffdceb4c77bf34325fb695e64ea447f688797f2f1e3af224c29593310578d2",
+                "sha256:14bbd054da498a9bd03c549443b4957975d19e3e3542e5ed8498aa253cc704f6",
+                "sha256:cc5b1bdb1a86cebc43f66ed60ba8f16cfa7e13918ee40f9ef71862a3a5b3b650",
+                "sha256:fa6bafb5dfda6d62f74f041d86dec24400e22c2b2dd08b2aa54672f491d502e3",
+                "sha256:d607ec53ac2d7f4dd470a49f2fef41a6243a634360de85eeb0e940f3878719cc",
+                "sha256:ffb8943cc2236ac9e74ef751843230e4b83cbf218e7b934594e60bad3be52b93",
+                "sha256:d17b8596f079db6ab55981dd12341a128ac7327f2e9396ffaa716e4e2415cbc9",
+                "sha256:b364ed80bb3b49c97a93cd5e1a4dfe736ef14daea715bd8191e1d423d79e0efa",
+                "sha256:131cb3a487db03bf527c61b96c5e38f248c7317fad28aef2bb7ff539bcc046de",
+                "sha256:061993eaba80fe2fa21298717a75d13549ed14ab3f0f48bcd4fee99ed4ad7f83"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker image inspect mongo | grep MONGO_VERSION
+                "MONGO_VERSION=5.0.6"
+                "MONGO_VERSION=5.0.6"
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker image inspect mongo > mongo.json
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker run -d --name mongo1 mongo
+84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker ps
+CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                NAMES
+84f14de96619   mongo                    "docker-entrypoint.s…"   8 seconds ago   Up 3 seconds   27017/tcp            mongo1
+189dc15b349a   wordpress:4.7.2-apache   "docker-entrypoint.s…"   6 hours ago     Up 6 hours     0.0.0.0:80->80/tcp   wordpress01
+f332a43c2982   mariadb:10.0.29          "docker-entrypoint.s…"   6 hours ago     Up 6 hours     3306/tcp             mariadb01
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect mongo1
+[
+    {
+        "Id": "84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f",
+        "Created": "2022-02-08T20:16:12.8635496Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "mongod"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 8323,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2022-02-08T20:16:17.2100974Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:5285cb69ea55647dace8e96739d99a1bffdc38e4dfa721a4ba9d39dabfa38df8",
+        "ResolvConfPath": "/var/lib/docker/containers/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f/hostname",
+        "HostsPath": "/var/lib/docker/containers/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f/hosts",
+        "LogPath": "/var/lib/docker/containers/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f-json.log",
+        "Name": "/mongo1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/ffaab5caa90dfe59cab9d0a18dfdb255f8eeb3925955f7dcca7b92ae347d7684-init/diff:/var/lib/docker/overlay2/af6bc7df34e7ff431406800ebb0d0724cb134d0ec944ece961b26fff66314e2a/diff:/var/lib/docker/overlay2/0bdc0dd976b90ce14a2666d274935f3f41145602e449dcd555f90e7b32cdd542/diff:/var/lib/docker/overlay2/9ddd07758b88c79ffe38035791f4b14459292bc18999ebce3a9d656aa56fc17e/diff:/var/lib/docker/overlay2/b69fc82055f9f31ae8a14804b067767af1f72fb04250cd5e8b461977c2ec449a/diff:/var/lib/docker/overlay2/0d402f1ece21df377cccd1b5d994830605f599d76a61e6a207a80339067290ec/diff:/var/lib/docker/overlay2/1dd57c55b029e3773b59c8406f216994b65614721d9ae0d5f2fd050a5ad37e59/diff:/var/lib/docker/overlay2/1f34d05d7f7242a5a47fe6f150ad93bfafcdd430c9d5c7b359a70394c72650ed/diff:/var/lib/docker/overlay2/c960c4847c2cf207dff33140eb07fb03f62ed99f07dec4738612ed0b845402e7/diff:/var/lib/docker/overlay2/30f106c9ac3b1e0cce2de95125758bf0c03bf6c53b1c21caee8f7a03b42a468e/diff:/var/lib/docker/overlay2/ecd91cbf0bce623c377fb3e896fe1d9fe342e698dc17de3549ca4e0697968cc8/diff",
+                "MergedDir": "/var/lib/docker/overlay2/ffaab5caa90dfe59cab9d0a18dfdb255f8eeb3925955f7dcca7b92ae347d7684/merged",
+                "UpperDir": "/var/lib/docker/overlay2/ffaab5caa90dfe59cab9d0a18dfdb255f8eeb3925955f7dcca7b92ae347d7684/diff",
+                "WorkDir": "/var/lib/docker/overlay2/ffaab5caa90dfe59cab9d0a18dfdb255f8eeb3925955f7dcca7b92ae347d7684/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "08a41207e2eaf77a873bff72091178dcf7e4f409c00a6d0f50fa9c7f2d6aa58b",
+                "Source": "/var/lib/docker/volumes/08a41207e2eaf77a873bff72091178dcf7e4f409c00a6d0f50fa9c7f2d6aa58b/_data",
+                "Destination": "/data/configdb",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "volume",
+                "Name": "0da34cab2b0665d1a95826fcabaf663d42e3ce5e5d52792a95e90c6c60a41003",
+                "Source": "/var/lib/docker/volumes/0da34cab2b0665d1a95826fcabaf663d42e3ce5e5d52792a95e90c6c60a41003/_data",
+                "Destination": "/data/db",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "84f14de96619",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "27017/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.12",
+                "JSYAML_VERSION=3.13.1",
+                "MONGO_PACKAGE=mongodb-org",
+                "MONGO_REPO=repo.mongodb.org",
+                "MONGO_MAJOR=5.0",
+                "MONGO_VERSION=5.0.6"
+            ],
+            "Cmd": [
+                "mongod"
+            ],
+            "Image": "mongo",
+            "Volumes": {
+                "/data/configdb": {},
+                "/data/db": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "desktop.docker.io/wsl-distro": "Ubuntu"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "8f79ee10d43ae98c8a08ea00068ed55db8828616b97bcbab2d2dcc1d6e145d17",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "27017/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/8f79ee10d43a",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "b08759e6925241f3c59d07ef6944faf63b7cf8f852a53a0c43154f4cf97da109",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "0b0f323b6886d2a71e21c97b289f49fb1b949db12d29fff21a9cc3143657a75e",
+                    "EndpointID": "b08759e6925241f3c59d07ef6944faf63b7cf8f852a53a0c43154f4cf97da109",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect mongo1 | grep IPAddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.2",
+                    "IPAddress": "172.17.0.2",
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect mongo1 | grep ShmSize
+            "ShmSize": 67108864,
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect --format='{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+"docker inspect" requires at least 1 argument.
+See 'docker inspect --help'.
+
+Usage:  docker inspect [OPTIONS] NAME|ID [NAME|ID...]
+
+Return low-level information on Docker objects
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect --format='{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mongo1
+172.17.0.2
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect --format='{{.LogPath}}' mongo1
+/var/lib/docker/containers/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f/84f14de96619f5d7575b7490c4e457e4adc4a71ae027e42e068816e9f902f18f-json.log
+anayelimonserrat@DESKTOP-KB6OENT:~$ docker inspect --format='{{.Config.Image}}' mongo1
+mongo
+anayelimonserrat@DESKTOP-KB6OENT:~$
