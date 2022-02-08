@@ -1,4 +1,4 @@
-# docker-act1
+# docker-act
 Elaborado por: Anayeli Monserrat Hernández Herrera
 - Levantar el CMS de Wordpress con salida en el puerto 8080 con conexión a la base de datos worpress01 creada en el contendor mariadb01. 
 - Realizar la conexión empleando bridge FrontEnd y BackEnd, como se realizo en clase.
