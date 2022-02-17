@@ -5,3 +5,4 @@ Elaborado por: Anayeli Monserrat Hernández Herrera
 - Crear dos volumenes uno para wordpress llamado VL_wordpress01 compartido en el Host con la dirección /var/www/html y otro para mariadb01 llamado VL_mariadb01 compartida en el host con la dirección /var/lib/mysql, en donde se almacen la información de cada contener. 
 
 Práctica 2 de laboratorio
+Laboratio 2 - Docker Compose
