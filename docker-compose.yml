@@ -1,0 +1,71 @@
+#Hernández Herrera Anayeli Monserrat | 18011743 | 8°B |
+#Versión de la estandarización que se va a utilizar para escribir el archivo, bajo que normas
+version: '3.8'
+#Me permite escribir de manera permanente en un archivo el comando "docker run..."
+#Me permite poder levantar varios contenedores preconfigurados de un solo golpe
+services:
+  #Empieza Node-red
+  nodered:
+  #Pertenece a la configuración del servicio node-red
+      #Nombre del contenedor
+      container_name: Nodered
+      #Imagen de node-red
+      image: nodered/node-red:latest
+      #Definó un comporamiento, si pasa algo o si reinicio el servidor o computadora, se va a levantar 
+      #automaticamente este contenedor
+      restart: always
+      #- Especifico los puertos para poder acceder a node-red
+      ports:
+      - 1880:1880
+      #Especifica que node-red depende de InfluxDB, la base de datos. 
+      depends_on:
+      - influxdb
+
+  #Empieza InfluxDB, fuente de datos para Node-red y Grafana
+  influxdb:
+  #Pertenece a la configuración de InfluxDB
+      #Nombre del contenedor
+      container_name: InfluxDB
+      #Imagen de influxdb
+      image: influxdb
+      #Definó un comporamiento, si pasa algo o si reinicio el servidor o computadora, se va a levantar 
+      #automaticamente
+      restart: always
+      #Se va a configurar las variables de entorno que estarán disponibles para esta base de datos 
+      environment:
+        #Crea una base de datos cuando se cree el contenedor llamada grafana
+        - INFLUXDB_DB=grafana
+        #Crea un usuario llamado grafana
+        - INFLUXDB_USER=grafana
+        #Crea una contraseña llamada contraseña
+        - INFLUXDB_USER_PASSWORD=contraseña
+        #Habilita una cuenta de administrador para Influx con true
+        - INFLUXDB_ADMIN_ENABLE=true
+        #Establece un usuario llamado admin
+        - INFLUXDB_ADMIN_USER=admin
+        #Establece una contraseña llamada contraseña
+        - INFLUXDB_ADMIN_PASSWORD=contraseña
+        
+  #Empieza Grafana
+  grafana:
+  #Pertenece a la configuración del servicio Grafana
+      #Nombre del contenedor
+      container_name: Grafana
+      #Imagen de  grafana
+      image: grafana/grafana
+      #Definó un comporamiento, si pasa algo o si reinicio el servidor o computadora, se va a levantar 
+      #automaticamente
+      restart: always
+      #- Especifico los puertos para poder acceder a grafanda
+      ports:
+      - 3000:3000
+      #Especifica que Grafana depende de InfluxDB, la base de datos. 
+      depends_on:
+      - influxdb
+#Termina
+      
+
+
+
+
+
